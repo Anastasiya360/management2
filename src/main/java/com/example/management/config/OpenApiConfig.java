@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.info.Info;
         info = @Info(
                 title = "Task Management System",
                 description = "Task Management System", version = "2.6.0",
-                contact = @Contact (
+                contact = @Contact(
                         name = "Anastasia",
                         email = "n.bogocharova@gmail.com"
                 )

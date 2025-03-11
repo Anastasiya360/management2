@@ -51,9 +51,9 @@ public class Comment implements Serializable {
     private UserDto userAuthorDto;
 
     @PostLoad
-    public void postLoad(){
-        if (author != null){
-            userAuthorDto = new UserDto(author.getName(),author.getSurname());
+    public void postLoad() {
+        if (author != null) {
+            userAuthorDto = new UserDto(author.getName(), author.getSurname());
         }
     }
 }

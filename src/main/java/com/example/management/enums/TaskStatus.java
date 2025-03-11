@@ -1,8 +1,7 @@
 package com.example.management.enums;
 
 public enum TaskStatus {
-    pending,
-    inProgress,
-    completed
-
+    PENDING,
+    IN_PROGRESS,
+    COMPLETED
 }

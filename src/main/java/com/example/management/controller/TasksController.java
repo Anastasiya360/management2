@@ -1,7 +1,7 @@
 package com.example.management.controller;
 
 import com.example.management.dto.TaskDto;
-import com.example.management.entity.Tasks;
+import com.example.management.entity.Task;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.ArraySchema;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -41,7 +41,7 @@ public interface TasksController {
     @PostMapping(path = "/create")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "" + HttpServletResponse.SC_OK, description = "Запрос выполнен успешно",
-                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Tasks.class))),
+                    content = @Content(mediaType = "application/json", schema = @Schema(implementation = Task.class))),
             @ApiResponse(responseCode = "" + HttpServletResponse.SC_BAD_REQUEST,
                     description = """
                             * Заголовок не передан
@@ -50,7 +50,7 @@ public interface TasksController {
                             * Приоритет задачи задан не верно
                             """)
     })
-    Tasks create(@RequestBody Tasks tasks);
+    Task create(@RequestBody Task tasks);
 
     @PreAuthorize("hasAnyAuthority('admin')")
     @Operation(
@@ -59,10 +59,10 @@ public interface TasksController {
     @GetMapping(path = "/get/all")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "" + HttpServletResponse.SC_OK, description = "Запрос выполнен успешно",
-                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Tasks.class)))),
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Task.class)))),
     })
-    List<Tasks> getAll(@RequestParam(required = false) Integer pageNum,
-                       @RequestParam(required = false) Integer pageSize);
+    List<Task> getAll(@RequestParam(required = false) Integer pageNum,
+                      @RequestParam(required = false) Integer pageSize);
 
     @Operation(
             summary = "Change task's status",
@@ -97,15 +97,15 @@ public interface TasksController {
     @GetMapping(path = "/get/all/by/executor")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "" + HttpServletResponse.SC_OK, description = "Запрос выполнен успешно",
-                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Tasks.class)))),
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Task.class)))),
     })
     List<TaskDto> findTaskByExecutorId(@RequestParam Integer userId,
-                                     @RequestParam(required = false) Integer pageNum,
-                                     @RequestParam(required = false) Integer pageSize,
-                                     @RequestParam(required = false) String title,
-                                     @RequestParam(required = false) String description,
-                                     @RequestParam(required = false) String status,
-                                     @RequestParam(required = false) String priority);
+                                       @RequestParam(required = false) Integer pageNum,
+                                       @RequestParam(required = false) Integer pageSize,
+                                       @RequestParam(required = false) String title,
+                                       @RequestParam(required = false) String description,
+                                       @RequestParam(required = false) String status,
+                                       @RequestParam(required = false) String priority);
 
     @PreAuthorize("hasAnyAuthority('admin')")
     @Operation(
@@ -115,7 +115,7 @@ public interface TasksController {
     @GetMapping(path = "/get/all/by/author")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "" + HttpServletResponse.SC_OK, description = "Запрос выполнен успешно",
-                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Tasks.class)))),
+                    content = @Content(mediaType = "application/json", array = @ArraySchema(schema = @Schema(implementation = Task.class)))),
     })
     List<TaskDto> findTaskByAuthorId(@RequestParam Integer userId,
                                      @RequestParam(required = false) Integer pageNum,

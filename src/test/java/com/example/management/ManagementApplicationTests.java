@@ -1,13 +1,10 @@
 package com.example.management;
 
-import com.example.management.entity.Comment;
-import com.example.management.entity.Tasks;
+import com.example.management.entity.Task;
 import com.example.management.entity.User;
 import com.example.management.exceptoin.ApiException;
-import com.example.management.repository.CommentRepository;
 import com.example.management.repository.TasksRepository;
 import com.example.management.repository.UserRepository;
-import com.example.management.service.CommentService;
 import com.example.management.service.TasksService;
 import com.example.management.service.UserService;
 import org.junit.jupiter.api.Assertions;
@@ -51,7 +48,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskDeleteSuccess() {
-        Tasks task = new Tasks();
+        Task task = new Task();
         task.setId(6);
         User author = new User();
         author.setId(1);
@@ -67,7 +64,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreateTitleNull() {
-        Tasks task = new Tasks(2, null, "Description", "pending", "low");
+        Task task = new Task(2, null, "Description", "pending", "low");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -79,7 +76,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreateTitleIsBlank() {
-        Tasks task = new Tasks(2, " ", "Description", "pending", "low");
+        Task task = new Task(2, " ", "Description", "pending", "low");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -91,7 +88,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreateDescriptionNull() {
-        Tasks task = new Tasks(2, "Title", null, "pending", "low");
+        Task task = new Task(2, "Title", null, "pending", "low");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -103,7 +100,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreateDescriptionIsBlank() {
-        Tasks task = new Tasks(2, "Title", "", "pending", "low");
+        Task task = new Task(2, "Title", "", "pending", "low");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -115,7 +112,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreatePriorityIsBlank() {
-        Tasks task = new Tasks(2, "Title", "Description", "pending", "");
+        Task task = new Task(2, "Title", "Description", "pending", "");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -127,7 +124,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreatePriorityNull() {
-        Tasks task = new Tasks(2, "Title", "Description", "pending", null);
+        Task task = new Task(2, "Title", "Description", "pending", null);
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -139,7 +136,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreatePriorityNotValid() {
-        Tasks task = new Tasks(2, "Title", "Description", "pending", "big");
+        Task task = new Task(2, "Title", "Description", "pending", "big");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -151,7 +148,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreatePrioritySuccess() {
-        Tasks task = new Tasks(2, "Title", "Description", "pending", "low");
+        Task task = new Task(2, "Title", "Description", "pending", "low");
         mockSecurity(12);
 
         Assertions.assertDoesNotThrow(() -> {
@@ -174,7 +171,7 @@ class ManagementApplicationTests {
     void testTaskChangeStatusNotValid() {
         User user = new User();
         user.setId(12);
-        Tasks task = new Tasks(2, "Title", "Description", "pending", "big", user, user);
+        Task task = new Task(2, "Title", "Description", "pending", "big", user, user);
         Mockito.when(tasksRepository.findById(2)).thenReturn(Optional.of(task));
         mockSecurity(12);
 
@@ -189,7 +186,7 @@ class ManagementApplicationTests {
     void testTaskChangeStatusSuccess() {
         User user = new User();
         user.setId(12);
-        Tasks task = new Tasks(2, "Title", "Description", "pending", "big", user, user);
+        Task task = new Task(2, "Title", "Description", "pending", "big", user, user);
         Mockito.when(tasksRepository.findById(2)).thenReturn(Optional.of(task));
         mockSecurity(12);
 
@@ -215,7 +212,7 @@ class ManagementApplicationTests {
         author.setId(12);
         User executor = new User();
         executor.setId(5);
-        Tasks task = new Tasks(2, "Title", "Description", "pending", "low", author);
+        Task task = new Task(2, "Title", "Description", "pending", "low", author);
         Mockito.when(tasksRepository.findById(2)).thenReturn(Optional.of(task));
         Mockito.when(userRepository.findById(5)).thenReturn(Optional.of(executor));
         mockSecurity(12);

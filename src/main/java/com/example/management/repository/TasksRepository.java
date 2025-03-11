@@ -1,6 +1,6 @@
 package com.example.management.repository;
 
-import com.example.management.entity.Tasks;
+import com.example.management.entity.Task;
 import jakarta.persistence.Tuple;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface TasksRepository extends JpaRepository<Tasks, Integer> {
+public interface TasksRepository extends JpaRepository<Task, Integer> {
     @Query(nativeQuery = true, value = "select tasks.id, tasks.title, tasks.description, tasks.status, tasks.priority, tasks.user_id_author, tasks.user_id_executor from management.tasks" +
             "         where (tasks.user_id_executor = :userId)" +
             "and (tasks.title is null or tasks.title like concat('%', :title, '%'))" +

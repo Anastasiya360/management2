@@ -1,7 +1,7 @@
 package com.example.management.service.impl;
 
 import com.example.management.dto.TaskDto;
-import com.example.management.entity.Tasks;
+import com.example.management.entity.Task;
 import com.example.management.entity.User;
 import com.example.management.enums.Priority;
 import com.example.management.enums.TaskStatus;
@@ -36,7 +36,7 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public Tasks create(Tasks tasks) {
+    public Task create(Task tasks) {
         tasks.setId(null);
         tasks.setStatus("pending");
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
@@ -49,7 +49,7 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public List<Tasks> getAll(Pageable pageable) {
+    public List<Task> getAll(Pageable pageable) {
         if (pageable == null) {
             return tasksRepository.findAll();
         } else {
@@ -58,11 +58,11 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public Tasks findById(Integer taskId) {
+    public Task findById(Integer taskId) {
         if (taskId == null) {
             throw new ApiException("Идентификатор задачи не задан", HttpServletResponse.SC_BAD_REQUEST);
         }
-        Optional<Tasks> task = tasksRepository.findById(taskId);
+        Optional<Task> task = tasksRepository.findById(taskId);
         if (task.isEmpty()) {
             throw new ApiException("Задача не найдена", HttpServletResponse.SC_NOT_FOUND);
         }
@@ -70,8 +70,8 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public Tasks changeStatus(Integer taskId, String status) {
-        Tasks task = findById(taskId);
+    public Task changeStatus(Integer taskId, String status) {
+        Task task = findById(taskId);
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if ((!currentUser.getId().equals(task.getExecutor().getId())) && (!currentUser.getRole().equals("admin"))) {
             throw new ApiException("Пользователь не может изменить статус", HttpServletResponse.SC_FORBIDDEN);
@@ -84,8 +84,8 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public Tasks appointExecutor(Integer taskId, Integer executorId) {
-        Tasks task = findById(taskId);
+    public Task appointExecutor(Integer taskId, Integer executorId) {
+        Task task = findById(taskId);
         task.setExecutor(userService.findById(executorId));
         return tasksRepository.save(task);
     }
@@ -113,14 +113,14 @@ public class TasksServiceImpl implements TasksService {
     }
 
     @Override
-    public Tasks changeTask(Integer taskId, String title, String description) {
-        Tasks task = findById(taskId);
+    public Task changeTask(Integer taskId, String title, String description) {
+        Task task = findById(taskId);
         task.setTitle(title);
         task.setDescription(description);
         return tasksRepository.save(task);
     }
 
-    private void checkParam(Tasks tasks) {
+    private void checkParam(Task tasks) {
         if (tasks.getTitle() == null || tasks.getTitle().isBlank()) {
             throw new ApiException("Заголовок не передан", HttpServletResponse.SC_BAD_REQUEST);
         }

@@ -2,7 +2,6 @@ package com.example.management.exceptoin;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.ToString;
 
 @EqualsAndHashCode(callSuper = false)
 @Data

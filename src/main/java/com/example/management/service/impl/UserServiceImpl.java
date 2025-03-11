@@ -1,8 +1,6 @@
 package com.example.management.service.impl;
 
-import com.example.management.entity.Tasks;
 import com.example.management.entity.User;
-import com.example.management.enums.Priority;
 import com.example.management.enums.Role;
 import com.example.management.exceptoin.ApiException;
 import com.example.management.repository.UserRepository;

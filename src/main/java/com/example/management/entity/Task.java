@@ -18,7 +18,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(schema = "management", name = "tasks")
-public class Tasks implements Serializable {
+public class Task implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -47,14 +47,15 @@ public class Tasks implements Serializable {
     @ManyToOne(targetEntity = User.class, cascade = CascadeType.DETACH)
     private User executor;
 
-    public Tasks(Integer id, String title, String description, String status, String priority) {
+    public Task(Integer id, String title, String description, String status, String priority) {
         this.id = id;
         this.title = title;
         this.description = description;
         this.status = status;
         this.priority = priority;
     }
-    public Tasks(Integer id, String title, String description, String status, String priority, User author) {
+
+    public Task(Integer id, String title, String description, String status, String priority, User author) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -62,7 +63,8 @@ public class Tasks implements Serializable {
         this.priority = priority;
         this.author = author;
     }
-    public Tasks(Integer id, String title, String description, String status, String priority, User author, User executor) {
+
+    public Task(Integer id, String title, String description, String status, String priority, User author, User executor) {
         this.id = id;
         this.title = title;
         this.description = description;
@@ -83,12 +85,12 @@ public class Tasks implements Serializable {
     private UserDto userExecutorDto;
 
     @PostLoad
-    public void postLoad(){
-        if (author != null){
-            userAuthorDto = new UserDto(author.getName(),author.getSurname());
+    public void postLoad() {
+        if (author != null) {
+            userAuthorDto = new UserDto(author.getName(), author.getSurname());
         }
-        if (executor != null){
-            userExecutorDto = new UserDto(executor.getName(),executor.getSurname());
+        if (executor != null) {
+            userExecutorDto = new UserDto(executor.getName(), executor.getSurname());
         }
     }
 }

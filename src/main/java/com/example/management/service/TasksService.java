@@ -1,7 +1,7 @@
 package com.example.management.service;
 
 import com.example.management.dto.TaskDto;
-import com.example.management.entity.Tasks;
+import com.example.management.entity.Task;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -20,35 +20,35 @@ public interface TasksService {
      *
      * @return созданная задача
      */
-    Tasks create(Tasks tasks);
+    Task create(Task tasks);
 
     /**
      * Получение всех задач
      *
      * @return все задачи
      */
-    List<Tasks> getAll(Pageable pageable);
+    List<Task> getAll(Pageable pageable);
 
     /**
      * Получение задачи по id
      *
      * @return найденная задача
      */
-    Tasks findById(Integer taskId);
+    Task findById(Integer taskId);
 
     /**
      * Изменение статуса задачи, только для исполнителей задачи
      *
      * @return задача с измененным статусом
      */
-    Tasks changeStatus(Integer taskId, String status);
+    Task changeStatus(Integer taskId, String status);
 
     /**
      * Назначение исполнителя задачи, только для автора задачи
      *
      * @return задача с назначенным исполнителем
      */
-    Tasks appointExecutor(Integer taskId, Integer executorId);
+    Task appointExecutor(Integer taskId, Integer executorId);
 
     /**
      * Получение всех задач по исполнителю задачи
@@ -62,12 +62,12 @@ public interface TasksService {
      *
      * @return список задач
      */
-    List<TaskDto> findTaskByAuthorId(Integer userId, Pageable pageable, String title, String description, String status,String priority);
+    List<TaskDto> findTaskByAuthorId(Integer userId, Pageable pageable, String title, String description, String status, String priority);
 
     /**
      * Изменение заголовка и описания задачи, только для автора задачи
      *
      * @return измененная задача
      */
-    Tasks changeTask(Integer taskId, String title, String description);
+    Task changeTask(Integer taskId, String title, String description);
 }

@@ -1,7 +1,7 @@
 package com.example.management.service.impl;
 
 import com.example.management.entity.Comment;
-import com.example.management.entity.Tasks;
+import com.example.management.entity.Task;
 import com.example.management.entity.User;
 import com.example.management.exceptoin.ApiException;
 import com.example.management.repository.CommentRepository;
@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
     public Comment create(Comment comment) {
         comment.setId(null);
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Tasks task = tasksService.findById(comment.getTaskId());
+        Task task = tasksService.findById(comment.getTaskId());
         if (!currentUser.getId().equals(task.getExecutor().getId())
                 && (!currentUser.getRole().equals("admin"))) {
             throw new ApiException("Недостаточно прав для создания комментария к этой задаче", HttpServletResponse.SC_FORBIDDEN);

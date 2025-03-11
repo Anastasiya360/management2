@@ -41,7 +41,7 @@ public class User implements UserDetails {
     @Column(name = "password")
     private String password;
 
-    public User(String name, String surname,String role, String email, String password) {
+    public User(String name, String surname, String role, String email, String password) {
         this.name = name;
         this.surname = surname;
         this.role = role;
