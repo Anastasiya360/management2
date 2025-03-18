@@ -38,7 +38,7 @@ public class TasksServiceImpl implements TasksService {
     @Override
     public Task create(Task tasks) {
         tasks.setId(null);
-        tasks.setStatus("pending");
+        tasks.setStatus(TaskStatus.PENDING.toString());
         User currentUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         tasks.setAuthor(currentUser);
         checkParam(tasks);
