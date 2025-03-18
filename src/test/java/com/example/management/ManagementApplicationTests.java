@@ -64,7 +64,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreateTitleNull() {
-        Task task = new Task(2, null, "Description", "pending", "low");
+        Task task = new Task(2, null, "Description", "PENDING", "LOW");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -76,7 +76,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreateTitleIsBlank() {
-        Task task = new Task(2, " ", "Description", "pending", "low");
+        Task task = new Task(2, " ", "Description", "PENDING", "LOW");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -88,7 +88,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreateDescriptionNull() {
-        Task task = new Task(2, "Title", null, "pending", "low");
+        Task task = new Task(2, "Title", null, "PENDING", "LOW");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -100,7 +100,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreateDescriptionIsBlank() {
-        Task task = new Task(2, "Title", "", "pending", "low");
+        Task task = new Task(2, "Title", "", "PENDING", "LOW");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -112,7 +112,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreatePriorityIsBlank() {
-        Task task = new Task(2, "Title", "Description", "pending", "");
+        Task task = new Task(2, "Title", "Description", "PENDING", "");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -124,7 +124,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreatePriorityNull() {
-        Task task = new Task(2, "Title", "Description", "pending", null);
+        Task task = new Task(2, "Title", "Description", "PENDING", null);
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -136,7 +136,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreatePriorityNotValid() {
-        Task task = new Task(2, "Title", "Description", "pending", "big");
+        Task task = new Task(2, "Title", "Description", "PENDING", "BIG");
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
@@ -148,7 +148,7 @@ class ManagementApplicationTests {
 
     @Test
     void testTaskCreatePrioritySuccess() {
-        Task task = new Task(2, "Title", "Description", "pending", "low");
+        Task task = new Task(2, "Title", "Description", "PENDING", "LOW");
         mockSecurity(12);
 
         Assertions.assertDoesNotThrow(() -> {
@@ -161,7 +161,7 @@ class ManagementApplicationTests {
         Mockito.when(tasksRepository.findById(1)).thenReturn(Optional.empty());
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
-            tasksService.changeStatus(1, "inProgress");
+            tasksService.changeStatus(1, "IN_PROGRESS");
         });
         Assertions.assertEquals(404, thrown.getStatusCode());
         Assertions.assertEquals("Задача не найдена", thrown.getMessage());
@@ -171,12 +171,12 @@ class ManagementApplicationTests {
     void testTaskChangeStatusNotValid() {
         User user = new User();
         user.setId(12);
-        Task task = new Task(2, "Title", "Description", "pending", "big", user, user);
+        Task task = new Task(2, "Title", "Description", "PENDING", "BIG", user, user);
         Mockito.when(tasksRepository.findById(2)).thenReturn(Optional.of(task));
         mockSecurity(12);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
-            tasksService.changeStatus(2, "low");
+            tasksService.changeStatus(2, "LOW");
         });
         Assertions.assertEquals(400, thrown.getStatusCode());
         Assertions.assertEquals("Статус задачи задан не верно", thrown.getMessage());
@@ -186,12 +186,12 @@ class ManagementApplicationTests {
     void testTaskChangeStatusSuccess() {
         User user = new User();
         user.setId(12);
-        Task task = new Task(2, "Title", "Description", "pending", "big", user, user);
+        Task task = new Task(2, "Title", "Description", "PENDING", "BIG", user, user);
         Mockito.when(tasksRepository.findById(2)).thenReturn(Optional.of(task));
         mockSecurity(12);
 
         Assertions.assertDoesNotThrow(() -> {
-            tasksService.changeStatus(2, "inProgress");
+            tasksService.changeStatus(2, "IN_PROGRESS");
         });
     }
 
@@ -212,7 +212,7 @@ class ManagementApplicationTests {
         author.setId(12);
         User executor = new User();
         executor.setId(5);
-        Task task = new Task(2, "Title", "Description", "pending", "low", author);
+        Task task = new Task(2, "Title", "Description", "PENDING", "LOW", author);
         Mockito.when(tasksRepository.findById(2)).thenReturn(Optional.of(task));
         Mockito.when(userRepository.findById(5)).thenReturn(Optional.of(executor));
         mockSecurity(12);
@@ -224,7 +224,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserCreateNameNull() {
-        User user = new User(null, "Surname", "admin","123@gmail.com", "12345678");
+        User user = new User(null, "Surname", "ADMIN","123@gmail.com", "12345678");
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
             userService.create(user);
@@ -235,7 +235,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserCreateNameIsBlank() {
-        User user = new User("", "Surname","admin", "123@gmail.com", "12345678");
+        User user = new User("", "Surname","ADMIN", "123@gmail.com", "12345678");
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
             userService.create(user);
@@ -246,7 +246,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserCreateEmailNull() {
-        User user = new User("Name", "Surname","admin", null, "12345678");
+        User user = new User("Name", "Surname","ADMIN", null, "12345678");
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
             userService.create(user);
@@ -257,7 +257,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserCreateEmailIsBlank() {
-        User user = new User("Name", "Surname","admin", "", "12345678");
+        User user = new User("Name", "Surname","ADMIN", "", "12345678");
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
             userService.create(user);
@@ -268,7 +268,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserCreateEmailNotValid() {
-        User user = new User("Name", "Surname","admin", "1234", "12345678");
+        User user = new User("Name", "Surname","ADMIN", "1234", "12345678");
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
             userService.create(user);
@@ -279,7 +279,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserCreatePasswordIsBlank() {
-        User user = new User("Name", "Surname","admin", "123@gmail.com", null);
+        User user = new User("Name", "Surname","ADMIN", "123@gmail.com", null);
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
             userService.create(user);
@@ -290,7 +290,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserCreatePasswordNull() {
-        User user = new User("Name", "Surname","admin", "123@gmail.com", "");
+        User user = new User("Name", "Surname","ADMIN", "123@gmail.com", "");
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
             userService.create(user);
@@ -301,7 +301,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserCreatePasswordNotValid() {
-        User user = new User("Name", "Surname","admin", "123@gmail.com", "12345");
+        User user = new User("Name", "Surname","ADMIN", "123@gmail.com", "12345");
 
         ApiException thrown = Assertions.assertThrows(ApiException.class, () -> {
             userService.create(user);
@@ -323,7 +323,7 @@ class ManagementApplicationTests {
 
     @Test
     void testUserGetByEmailSuccess() {
-        User user = new User("Name", "Surname","admin", "123@gmail.com", "12345678");
+        User user = new User("Name", "Surname","ADMIN", "123@gmail.com", "12345678");
         Mockito.when(userRepository.findUserByEmail("123@gmail.com")).thenReturn(user);
 
         Assertions.assertDoesNotThrow(() -> {

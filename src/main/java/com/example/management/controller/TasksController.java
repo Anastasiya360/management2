@@ -21,7 +21,7 @@ import java.util.List;
 @ApiResponse(responseCode = "" + HttpServletResponse.SC_INTERNAL_SERVER_ERROR, description = "Внутренняя ошибка сервера")
 public interface TasksController {
 
-    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(
             summary = "Delete task",
             description = "Delete task by id"
@@ -34,7 +34,7 @@ public interface TasksController {
     })
     void deleteById(@PathVariable Integer id);
 
-    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(
             summary = "Create task"
     )
@@ -52,7 +52,7 @@ public interface TasksController {
     })
     Task create(@RequestBody Task tasks);
 
-    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(
             summary = "Get information about all tasks"
     )
@@ -77,7 +77,7 @@ public interface TasksController {
     })
     void changeStatus(@PathVariable Integer id, @RequestParam String status);
 
-    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(
             summary = "Change task's executor",
             description = "Change task's executor by id, only for author"
@@ -107,7 +107,7 @@ public interface TasksController {
                                        @RequestParam(required = false) String status,
                                        @RequestParam(required = false) String priority);
 
-    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(
             summary = "Get information about all tasks by author"
     )
@@ -125,7 +125,7 @@ public interface TasksController {
                                      @RequestParam(required = false) String status,
                                      @RequestParam(required = false) String priority);
 
-    @PreAuthorize("hasAnyAuthority('admin')")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     @Operation(
             summary = "Change task's title, description",
             description = "Change task's title, description by id, only for author"
